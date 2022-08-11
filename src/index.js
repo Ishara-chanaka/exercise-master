@@ -12,7 +12,7 @@ function printNumbers(){
     }
 
 }
-//printNumbers();
+printNumbers();
 
 
 
@@ -33,7 +33,7 @@ function printNumbers2(){
     }
 }
 
-//printNumbers2();
+printNumbers2();
 
 
 
@@ -66,7 +66,7 @@ async function getPrintNumbers2(){
     }
 }
 
-//getPrintNumbers2()
+getPrintNumbers2()
 
 //Question 04
 
@@ -84,7 +84,7 @@ async function printNumbersWithErrorHandlers() {
         }
     
   }
-  //printNumbersWithErrorHandlers();
+  printNumbersWithErrorHandlers();
   //-----------------------------------------------------------------
   async function printNumbers2withErrorHandlers(){
     let randomWord;
@@ -108,7 +108,7 @@ async function printNumbersWithErrorHandlers() {
     }
 }
 
-//printNumbers2withErrorHandlers();
+printNumbers2withErrorHandlers();
 
 async function getPrintNumbers2WithErrorHandlers(){
     for(let i=1; i<=100; i++){
@@ -132,7 +132,7 @@ async function getPrintNumbers2WithErrorHandlers(){
     }
 }
 
-//getPrintNumbers2WithErrorHandlers();
+getPrintNumbers2WithErrorHandlers();
 
 //Question 05
 
@@ -166,4 +166,4 @@ async function printTextFile(num, randomWord) {
   }
 
 
-//createFile();
+createFile();
