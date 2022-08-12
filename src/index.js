@@ -5,165 +5,190 @@ const fs = require('fs').promises;
 
 console.log('It works!');
 
+
 // question 01
-function printNumbers(){
-    for(let i=1; i<=100; i++){
-        console.log(`${i}: ${getRandomWordSync({ withErrors: false })}`);
-    }
 
-}
-printNumbers();
+function printNumbersAndRandomWord() {
+    const numArr = Array.from(Array(100).keys());
+    const printVal = numArr.map((n) => {
+        return(`${n+1}: ${getRandomWordSync({ withErrors: false })}`);
+    });
 
+    //console.log(printVal);
+    return printVal;
 
+}  
 
-//question 02
+//printNumbersAndRandomWord();
 
-function printNumbers2(){
-    for(let i=1; i<=100; i++){
-        if(i%3 == 0 && i%5 == 0){
-            console.log(`${i}: FizzBuzz`);
-        } else if(i%3 == 0){
-            console.log(`${i}: Fizz`);
-        } else if(i%5 == 0){
-            console.log(`${i}: Buzz`);
-        } else {
-            console.log(`${i}: ${getRandomWordSync({ withErrors: false })}`); 
-        }
-    
-    }
+// question 02
+function printFizzBuzz(){
+    const numArr = Array.from(Array(100).keys());
+    const printVal = numArr.map((n) => {
+        return(`${n+1}: ${fizzBuzz(n+1) || getRandomWordSync({ withErrors: false })}`);
+    });
+    //console.log(printVal);
+    return printVal;
 }
 
-printNumbers2();
+function fizzBuzz(i){
+    let text = '';
+    if(i%3 == 0 && i%5 == 0){ 
+        text = 'FizzBuzz';
+    } else if(i%3 == 0){
+        text = 'Fizz';
+    } else if(i%5 == 0){
+        text = 'Buzz';
+    } 
+    return text;
+}
 
+//printFizzBuzz();
 
 
 // question 03
+async function AsyncPrintNumbersAndRandomWord() {
+    const numArr = Array.from(Array(100).keys());
+    let printval = numArr.map(async (n) => {
+        return(`${n+1}: ${await getRandomWord({ withErrors: false, slow: false  })}`);
+    });
 
-async function getPrintNumbers() {
-    for(let i=1; i<=100; i++){
-        const randomWord = await getRandomWord({ withErrors: false, slow: true  });
-        console.log(`${i}: ${randomWord}`);
-    }
-    
-  }
-  getPrintNumbers();
+    //console.log(await Promise.all(printval));
+    return await Promise.all(printval);
+}  
 
-async function getPrintNumbers2(){
-    for(let i=1; i<=100; i++){
+//AsyncPrintNumbersAndRandomWord();
 
-        const randomWord = await getRandomWord({ withErrors: false, slow: true  });
+async function asyncPrintFizzBuzz(){
+    const numArr = Array.from(Array(100).keys());
+    let printval = numArr.map(async (n) => {
+        return(`${n+1}: ${fizzBuzz(n+1) || await getRandomWord({ withErrors: false, slow: false  })}`);
+    });
 
-        if(i%3 == 0 && i%5 == 0){
-            console.log(`${i}: FizzBuzz`);
-        } else if(i%3 == 0){
-            console.log(`${i}: Fizz`);
-        } else if(i%5 == 0){
-            console.log(`${i}: Buzz`);
-        } else {
-            console.log(`${i}: ${randomWord}`); 
-        }
-    
-    }
+    //console.log(await Promise.all(printval));
+    return await Promise.all(printval);
 }
 
-getPrintNumbers2()
+//asyncPrintFizzBuzz();
 
-//Question 04
+// question 04
 
-async function printNumbersWithErrorHandlers() {
-
-    let randomWord;
-
-        for(let i=1; i<=100; i++){
-            try {
-                randomWord = await getRandomWord({ withErrors: true });
-            } catch (err) {
-                randomWord = "It shouldn't break anything!";
-            }
-            console.log(`${i}: ${randomWord}`);
-        }
-    
-  }
-  printNumbersWithErrorHandlers();
-  //-----------------------------------------------------------------
-  async function printNumbers2withErrorHandlers(){
-    let randomWord;
-    for(let i=1; i<=100; i++){
-        try {
-            randomWord = await getRandomWord({ withErrors: true, slow: true  });
-        } catch (err) {
-            randomWord = "It shouldn't break anything!";
-        }
-
-        if(i%3 == 0 && i%5 == 0){
-            console.log(`${i}: FizzBuzz`);
-        } else if(i%3 == 0){
-            console.log(`${i}: Fizz`);
-        } else if(i%5 == 0){
-            console.log(`${i}: Buzz`);
-        } else {
-            console.log(`${i}: ${randomWord}`); 
-        }
-    
-    }
-}
-
-printNumbers2withErrorHandlers();
-
-async function getPrintNumbers2WithErrorHandlers(){
-    for(let i=1; i<=100; i++){
+function printNumbersAndRandomWordWithErrors() {
+    const numArr = Array.from(Array(100).keys());
+    const printVal = numArr.map((n) => {
 
         try {
-            randomWord = await getRandomWord({ withErrors: true, slow: true });
+            return(`${n+1}: ${getRandomWordSync({ withErrors: true })}`); 
         } catch (err) {
-            randomWord = "It shouldn't break anything!";
+            return(`${n+1}: It shouldn't break anything!`); 
         }
+    });
 
-        if(i%3 == 0 && i%5 == 0){
-            console.log(`${i}: FizzBuzz`);
-        } else if(i%3 == 0){
-            console.log(`${i}: Fizz`);
-        } else if(i%5 == 0){
-            console.log(`${i}: Buzz`);
-        } else {
-            console.log(`${i}: ${randomWord}`); 
-        }
-    
-    }
-}
+    //console.log(printVal);
+    return printVal;
 
-getPrintNumbers2WithErrorHandlers();
+}  
 
-//Question 05
+//printNumbersAndRandomWordWithErrors();
 
-//print data to file
-async function createFile() {
-    let randomWord;
-    let printline = '';
 
-    for(let i=1; i<=100; i++){
+function printFizzBuzzWithErrors(){
+    const numArr = Array.from(Array(100).keys());
+    const printVal = numArr.map((n) => {
+        
         try {
-            randomWord = await getRandomWordSync({ withErrors: true });
+            return(`${n+1}: ${fizzBuzz(n+1) || getRandomWordSync({ withErrors: true })}`);  
         } catch (err) {
-            randomWord = "It shouldn't break anything!";
+            return(`${n+1}: It shouldn't break anything!`); 
         }
-       
-       await printTextFile(i, randomWord);
-    
-
-    }
-
-    
+    });
+    //console.log(printVal);
+    return printVal;
 }
 
-async function printTextFile(num, randomWord) {
-    try {
-      const printline = `\n ${num}: ${randomWord}`;
-      await fs.writeFile('printNumbers.csv', printline, { flag: 'a' });
-    } catch (error) {
-      console.error(`Got an error trying to write to a file: ${error.message}`);
+//printFizzBuzzWithErrors();
+
+async function AsyncPrintNumbersAndRandomWordWithErrors() {
+    const numArr = Array.from(Array(100).keys());
+    let printval = numArr.map(async (n) => {
+        try {
+            return(`${n+1}: ${await getRandomWord({ withErrors: true, slow: false  })}`);  
+        } catch (err) {
+            return(`${n+1}: It shouldn't break anything!`); 
+        }
+        
+    });
+
+    //console.log(await Promise.all(printval));
+    return await Promise.all(printval);
+} 
+
+//AsyncPrintNumbersAndRandomWordWithErrors();
+
+
+
+async function asyncPrintFizzBuzzWithErrors(){
+    const numArr = Array.from(Array(100).keys());
+    let printval = numArr.map(async (n) => {
+        try {
+            return(`${n+1}: ${fizzBuzz(n+1) || await getRandomWord({ withErrors: true, slow: false  })}`);
+        } catch (err) {
+            return(`${n+1}: It shouldn't break anything!`); 
+        }
+        
+    });
+
+    //console.log(await Promise.all(printval));
+    return await Promise.all(printval);
+}
+
+//asyncPrintFizzBuzzWithErrors();
+
+// question 05
+
+function printData(file,printData,printtype="console"){
+    if(printtype == "console"){
+        console.log(printData);
+    }else if(printtype == "file"){
+        fs.writeFile(file, printData.join('\n'), function (err) {
+            if (err) throw err;
+            console.log(`${file}  Saved!'`);
+          });
     }
-  }
+    
+      
+}
 
+function printDataAsync(file,printData,printtype="console"){
+    if(printtype == "console"){
+        printData.then( n=>{
+            console.log(n);
+        });
 
-createFile();
+    }else if(printtype == "file"){
+   
+        printData.then( n=>{
+            fs.writeFile(file, n.join('\n'), (err)=>{
+            if (err) throw err;
+            });
+        });
+    }
+}
+//pass printtype ="console" for print result in console
+//and printtype ="file" for print result in to a file
+
+//Question -1 print
+printData('q1_printNumbersAndRandomWord.txt',printNumbersAndRandomWord(),printtype="file");
+
+//Question -2 print
+printData('q2_printFizzBuzz.txt',printFizzBuzz(),printtype="file");
+
+//Question -3 print
+printDataAsync('q3_AsyncPrintNumbersAndRandomWord.txt',AsyncPrintNumbersAndRandomWord(),printtype="file");
+printDataAsync('q3_asyncPrintFizzBuzz.txt',asyncPrintFizzBuzz(),printtype="file");
+
+//Question -4 print
+printData('q4_printNumbersAndRandomWordWithErrors.txt',printNumbersAndRandomWordWithErrors(),printtype="file");
+printData('q4_printFizzBuzzWithErrors.txt',printFizzBuzzWithErrors(),printtype="file");
+printDataAsync('q4_AsyncPrintNumbersAndRandomWordWithErrors.txt',AsyncPrintNumbersAndRandomWordWithErrors(),printtype="file");
+printDataAsync('q4_asyncPrintFizzBuzzWithErrors.txt',asyncPrintFizzBuzzWithErrors(),printtype="file");
