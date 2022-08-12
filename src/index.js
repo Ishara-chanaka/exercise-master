@@ -152,7 +152,7 @@ function printData(file,printData,printtype="console"){
     }else if(printtype == "file"){
         fs.writeFile(file, printData.join('\n'), function (err) {
             if (err) throw err;
-            console.log(`${file}  Saved!'`);
+            console.log(`${file}  saved successfully'`);
           });
     }
     
@@ -170,6 +170,7 @@ function printDataAsync(file,printData,printtype="console"){
         printData.then( n=>{
             fs.writeFile(file, n.join('\n'), (err)=>{
             if (err) throw err;
+            console.log(`${file}  saved successfully'`);
             });
         });
     }
