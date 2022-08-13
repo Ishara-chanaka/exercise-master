@@ -1,6 +1,6 @@
 const { getRandomWordSync, getRandomWord } = require('word-maker');
 
-const fs = require('fs').promises;
+const fs = require('fs');
 
 
 console.log('It works!');
@@ -161,13 +161,13 @@ function printData(file,printData,printtype="console"){
 
 function printDataAsync(file,printData,printtype="console"){
     if(printtype == "console"){
-        printData.then( n=>{
+        printData.then( (n)=>{
             console.log(n);
         });
 
     }else if(printtype == "file"){
    
-        printData.then( n=>{
+        printData.then( (n)=>{
             fs.writeFile(file, n.join('\n'), (err)=>{
             if (err) throw err;
             console.log(`${file}  saved successfully'`);
